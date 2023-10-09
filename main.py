@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 st.set_page_config(layout="wide")
 # Create a two-column layout
@@ -17,3 +18,24 @@ with col2:
 
 content2 = """Below you can find some of the apps i have built in python. Feel free to contact me."""
 st.write(content2)
+
+# Load data from a CSV file with the correct delimiter
+data = pd.read_csv("data.csv", sep=";")
+
+col3, empty_col, col4 = st.columns([1.5, 0.5, 1.5])
+
+with col3:
+    # Display the titles from the data
+    for index, row in data[:10].iterrows():
+        st.header(row["title"])
+        st.write(row["description"])
+        st.image("images/" + row['image'])
+        st.write(f'[Source]({row["url"]})')
+
+with col4:
+    # Display the titles from the data
+    for index, row in data[10:].iterrows():
+        st.header(row["title"])
+        st.write(row["description"])
+        st.image("images/" + row['image'])
+        st.write(f'[Source]({row["url"]})')
